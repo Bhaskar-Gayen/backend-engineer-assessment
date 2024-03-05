@@ -23,4 +23,7 @@ public interface AccountActivity {
    */
   @ActivityMethod
   Account createPaymentAccount(Account account);
+
+  @ActivityMethod
+  Account createStripeCustomer(Account account);
 }

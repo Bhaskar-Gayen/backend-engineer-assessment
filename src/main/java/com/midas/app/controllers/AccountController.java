@@ -7,6 +7,9 @@ import com.midas.generated.api.AccountsApi;
 import com.midas.generated.model.AccountDto;
 import com.midas.generated.model.CreateAccountDto;
 import java.util.List;
+import java.util.UUID;
+
+import com.midas.generated.model.UpdateAccountDto;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -36,7 +39,7 @@ public class AccountController implements AccountsApi {
             Account.builder()
                 .firstName(createAccountDto.getFirstName())
                 .lastName(createAccountDto.getLastName())
-                .email(createAccountDto.getEmail())
+                .email(createAccountDto.getEmail()).providerType(createAccountDto.getProviderType())
                 .build());
 
     return new ResponseEntity<>(Mapper.toAccountDto(account), HttpStatus.CREATED);
@@ -56,4 +59,28 @@ public class AccountController implements AccountsApi {
 
     return new ResponseEntity<>(accountsDto, HttpStatus.OK);
   }
+
+  @Override
+  public ResponseEntity<AccountDto> updateAccount(UUID accountId, UpdateAccountDto updateAccountDto) {
+    // Get the account by accountId from the database
+    Account account = accountService.getAccountById(String.valueOf(accountId));
+
+    // Update the account fields if they are present in the updateAccountDto
+    if (updateAccountDto.getFirstName() != null) {
+      account.setFirstName(updateAccountDto.getFirstName());
+    }
+    if (updateAccountDto.getLastName() != null) {
+      account.setLastName(updateAccountDto.getLastName());
+    }
+    if (updateAccountDto.getEmail() != null) {
+      account.setEmail(updateAccountDto.getEmail());
+    }
+
+    // Save the updated account
+    Account updatedAccount = accountService.updateAccount(String.valueOf(accountId),account);
+
+    // Return the updated account DTO
+    return new ResponseEntity<>(Mapper.toAccountDto(updatedAccount), HttpStatus.OK);
+  }
+
 }

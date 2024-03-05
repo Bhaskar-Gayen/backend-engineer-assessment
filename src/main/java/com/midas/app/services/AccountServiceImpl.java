@@ -37,8 +37,9 @@ public class AccountServiceImpl implements AccountService {
     logger.info("initiating workflow to create account for email: {}", details.getEmail());
 
     var workflow = workflowClient.newWorkflowStub(CreateAccountWorkflow.class, options);
-
-    return workflow.createAccount(details);
+    Account account = workflow.createAccount(details);
+    workflow.createStripeCustomer(details);
+    return account;
   }
 
   /**
@@ -50,4 +51,26 @@ public class AccountServiceImpl implements AccountService {
   public List<Account> getAccounts() {
     return accountRepository.findAll();
   }
+
+  @Override
+  public Account updateAccount(String accountId, Account updatedDetails) {
+    // Fetch the account from the repository
+    Account account = accountRepository.findById(accountId)
+            .orElseThrow(() -> new RuntimeException("Account not found"));
+
+    // Update the account details
+    account.setFirstName(updatedDetails.getFirstName());
+    account.setLastName(updatedDetails.getLastName());
+    account.setEmail(updatedDetails.getEmail());
+
+    // Save the updated account
+    return accountRepository.save(account);
+  }
+
+  @Override
+  public Account getAccountById(String accountId) {
+    return accountRepository.findById(accountId)
+            .orElseThrow(() -> new RuntimeException("Account not found"));
+  }
+
 }

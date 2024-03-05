@@ -16,4 +16,7 @@ public interface CreateAccountWorkflow {
    */
   @WorkflowMethod
   Account createAccount(Account details);
+
+  @WorkflowMethod
+  Account createStripeCustomer(Account details);
 }

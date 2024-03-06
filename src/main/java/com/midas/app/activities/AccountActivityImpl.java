@@ -28,12 +28,12 @@ public class AccountActivityImpl implements AccountActivity {
         try {
             Stripe.apiKey = "sk_test_tR3PYbcVNZZ796tH88S4VQ2u"; // Stripe secret key
             Customer customer = Customer.create(
-                    new CustomerCreateParams.Address.Builder().Builder()
+                    new CustomerCreateParams.Builder()
                             .setEmail(account.getEmail())
                             .setMetadata(Map.of("first_name", account.getFirstName(), "last_name", account.getLastName()))
                             .build()
             );
-            account.setStripeCustomerId(customer.getId());
+            account.setProviderId(customer.getId());
         } catch (StripeException e) {
             // Handle Stripe API exception
             e.printStackTrace();

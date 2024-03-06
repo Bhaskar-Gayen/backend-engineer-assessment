@@ -13,12 +13,17 @@ import com.midas.generated.model.UpdateAccountDto;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 @Controller
-@RequiredArgsConstructor
+@RestController
+@RequestMapping("/accounts")
 public class AccountController implements AccountsApi {
   private final AccountService accountService;
   private final Logger logger = LoggerFactory.getLogger(AccountController.class);
@@ -82,5 +87,15 @@ public class AccountController implements AccountsApi {
     // Return the updated account DTO
     return new ResponseEntity<>(Mapper.toAccountDto(updatedAccount), HttpStatus.OK);
   }
+
+    @Autowired
+    public AccountController(AccountService accountService) {
+        this.accountService = accountService;
+    }
+    @GetMapping
+    public ResponseEntity<List<Account>> getAccounts() {
+        List<Account> accounts = accountService.getAccounts();
+        return new ResponseEntity<>(accounts, HttpStatus.OK);
+    }
 
 }

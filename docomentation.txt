@@ -1,0 +1,59 @@
+Task 1: Integrating the Stripe Payment Processing Service
+Test Description
+This test ensures that the Stripe payment processing service is integrated correctly into the application for managing customer data upon user signup.
+
+Verify that the Stripe SDK is added to the project's Gradle dependencies.
+Verify that the createCustomer method is called upon user signup to create a new customer in Stripe.
+Expected Result
+The application should successfully create a new customer in Stripe upon user signup, and the customer's data should be managed through the Stripe service.
+
+Task 2: Adding New Fields to the APIs
+Test Description
+This test ensures that the new providerType field with an enum type and the providerId field are correctly added to the user model and API responses.
+
+
+Verify that the providerType enum with values stripe is added to the user model.
+Verify that the providerId field is generated and stored appropriately during the user signup process.
+Verify that the API responses include the providerType and providerId fields.
+Expected Result
+The user model should include the new fields, and the API responses should include these fields when returning user data.
+
+Task 3: Adding a New API to Update Fields
+Test Description
+This test ensures that the new PATCH /accounts/{accountId} endpoint is correctly implemented to update firstName, lastName, and email fields.
+
+
+Verify that the endpoint correctly updates the specified account's firstName, lastName, and email fields.
+Verify that the API response reflects the updated account details.
+Expected Result
+The endpoint should successfully update the specified account's fields and return the updated account details in the API response.
+
+Task 4: Adding a Dockerfile
+Test Description
+This test ensures that the multi-stage Dockerfile is correctly implemented to build and run the application.
+
+Test Steps
+Verify that the Dockerfile correctly builds the application.
+Verify that the Dockerfile correctly sets up the application environment.
+Verify that the application can be run using the Dockerfile.
+Expected Result
+The Dockerfile should successfully build and run the application within a Docker container.
+
+Task 5: API Implementation
+Test Description
+This test ensures that the GET /accounts endpoint is correctly implemented to return a list of user accounts.
+
+
+Verify that the endpoint correctly retrieves a list of user accounts.
+Verify that the API response includes the list of user accounts.
+Expected Result
+The endpoint should successfully return a list of user accounts in the API response.
+
+Additional Tests: Writing Tests
+Test Description
+This test ensures that unit tests and integration tests are correctly implemented for the application.
+
+Verify that unit tests cover the Stripe integration and new fields in the user model.
+Verify that integration tests cover the signup process and the GET /accounts endpoint functionality.
+
+Sir/madam i try to learn whatever i can i 2 days im new in this temporal and docker but i put my effort to give the best.
